@@ -1,4 +1,3 @@
-
 const exploreButton = document.querySelector(".explore-button");
 const sections = document.querySelectorAll(".hero, .fact");
 
@@ -57,3 +56,38 @@ window.addEventListener("keydown", (evt) => {
         smoothScrollTo(sections[next].getBoundingClientRect().top + window.scrollY);
     }
 });
+
+let touchStartY = 0;
+let touchEndY = 0;
+
+window.addEventListener("touchstart", (evt) => {
+    touchStartY = evt.touches[0].clientY;
+}, { passive: true });
+
+window.addEventListener("touchend", (evt) => {
+    touchEndY = evt.changedTouches[0].clientY;
+
+    const difference = touchStartY - touchEndY;
+
+    // Ignore tiny movements
+    if (Math.abs(difference) < 50) return;
+
+    const current = currentIndex();
+
+    if (difference > 0) {
+        // Swipe UP → next section
+        const next = Math.min(current + 1, sections.length - 1);
+
+        smoothScrollTo(
+            sections[next].getBoundingClientRect().top + window.scrollY
+        );
+
+    } else {
+        // Swipe DOWN → previous section
+        const next = Math.max(current - 1, 0);
+
+        smoothScrollTo(
+            sections[next].getBoundingClientRect().top + window.scrollY
+        );
+    }
+}, { passive: true });
