@@ -1,55 +1,116 @@
-
-
-html::before {
- 
+* {
+    box-sizing: border-box;
 }
 
-h1 {
-  font-size: 150px;
-  margin-top: 200px;
-  padding: 0px;
-  color: #172815;
-  
+html {
+
 }
 
-p {
-  margin-bottom: 100px;
-  margin-top: -100px;
-  padding: 0px;
-  color: #172815;
-  opacity: 1;
-}
 body {
-  background: black;
+    margin: 0;
+    background: #ffffff;
+    color: #241e1e;
+    font-family: "DM Mono", monospace;
+    height: 100%;
+    overflow: hidden; 
 }
 
-.content {
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color : white;
-  text-align: center;
-  font-family: inter-24pt, sans-serif;
-  font-weight: 400;
-  opacity: 0.6;
-  font-style: normal;
+.hero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    scroll-snap-align: start;
 }
 
- button { 
-  border: 0px ;
-  background-color: #3e5622;
-  padding: 10px;
-  color: black;
-  opacity: 0.6;
-  width: 100px;
-  border-width: 1px;
-  border-color: white;
-  transition: opacity , transform 0.5s;
- 
+.hero-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
 }
 
-button:hover {
-  opacity: 1;
-  transform: scale(1.1);
+.hero-title h1 {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(40px, 6vw, 90px);
+    font-weight: 400;
+}
+
+.hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    animation: floatAnimation 3s ease-in-out infinite;
+}
+
+.hero-image img {
+    display: block;
+    width: 309px;
+    height: 205px;
+    object-fit: contain;
+}
+
+.explore-button {
+    padding: 12px 25px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    background: rgba(255, 186, 89, 0.65);
+    color: white;
+    font-family: "DM Mono", monospace;
+    font-size: 17px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.explore-button:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 186, 89, 0.9);
+}
+
+.facts-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.fact {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 80px 115px;
+    background: white;
+    scroll-snap-align: start;
+}
+
+.fact h2 {
+    margin: 0 0 40px;
+    font-size: clamp(35px, 5vw, 59px);
+    font-weight: 400;
+}
+
+.fact p {
+    width: min(700px, 100%);
+    margin: 0;
+    font-size: clamp(20px, 3vw, 50px);
+    line-height: 1.25;
+}
+
+@keyframes floatAnimation {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+}
+
+@media (max-width: 700px) {
+    .hero { padding: 40px 25px; }
+    .hero-image img { width: 240px; height: auto; }
+    .fact { padding: 60px 30px; }
+    .fact p { font-size: 24px; }
 }
