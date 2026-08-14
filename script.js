@@ -57,37 +57,34 @@ window.addEventListener("keydown", (evt) => {
     }
 });
 
+// MOBILE SWIPE
 let touchStartY = 0;
-let touchEndY = 0;
 
-window.addEventListener("touchstart", (evt) => {
-    touchStartY = evt.touches[0].clientY;
+window.addEventListener("touchstart", (event) => {
+    touchStartY = event.touches[0].clientY;
 }, { passive: true });
 
-window.addEventListener("touchend", (evt) => {
-    touchEndY = evt.changedTouches[0].clientY;
 
-    const difference = touchStartY - touchEndY;
+window.addEventListener("touchend", (event) => {
+
+    if (isAnimating) return;
+
+    const touchEndY = event.changedTouches[0].clientY;
+    const distance = touchStartY - touchEndY;
 
     // Ignore tiny movements
-    if (Math.abs(difference) < 50) return;
+    if (Math.abs(distance) < 50) return;
 
-    const current = currentIndex();
+    const direction = distance > 0 ? 1 : -1;
 
-    if (difference > 0) {
-        // Swipe UP → next section
-        const next = Math.min(current + 1, sections.length - 1);
+    const next = Math.max(
+        0,
+        Math.min(
+            currentIndex() + direction,
+            sections.length - 1
+        )
+    );
 
-        smoothScrollTo(
-            sections[next].getBoundingClientRect().top + window.scrollY
-        );
+    smoothScrollTo(sections[next].offsetTop);
 
-    } else {
-        // Swipe DOWN → previous section
-        const next = Math.max(current - 1, 0);
-
-        smoothScrollTo(
-            sections[next].getBoundingClientRect().top + window.scrollY
-        );
-    }
 }, { passive: true });
